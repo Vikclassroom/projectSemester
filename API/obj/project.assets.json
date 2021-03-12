@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "DataAnnotationsExtensions/5.0.1.27": {
+        "type": "package",
+        "compile": {
+          "lib/NETFramework40/DataAnnotationsExtensions.dll": {}
+        },
+        "runtime": {
+          "lib/NETFramework40/DataAnnotationsExtensions.dll": {}
+        }
+      },
       "Microsoft.Extensions.ApiDescription.Server/3.0.0": {
         "type": "package",
         "build": {
@@ -79,6 +88,18 @@
     }
   },
   "libraries": {
+    "DataAnnotationsExtensions/5.0.1.27": {
+      "sha512": "lw4n4XzY62raAOrrlPdkh4h3PXenReARIazAPzs8AvlkKDAK9pe7kcUL3dh3T095/Q9+LezoXCfjEgDPslmGyg==",
+      "type": "package",
+      "path": "dataannotationsextensions/5.0.1.27",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dataannotationsextensions.5.0.1.27.nupkg.sha512",
+        "dataannotationsextensions.nuspec",
+        "lib/NETFramework40/DataAnnotationsExtensions.dll"
+      ]
+    },
     "Microsoft.Extensions.ApiDescription.Server/3.0.0": {
       "sha512": "LH4OE/76F6sOCslif7+Xh3fS/wUUrE5ryeXAMcoCnuwOQGT5Smw0p57IgDh/pHgHaGz/e+AmEQb7pRgb++wt0w==",
       "type": "package",
@@ -189,6 +210,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "DataAnnotationsExtensions >= 5.0.1.27",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
@@ -198,11 +220,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitRepository\\backend\\API\\API.csproj",
+      "projectUniqueName": "D:\\GitRepository\\projectSemester\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "D:\\GitRepository\\backend\\API\\API.csproj",
+      "projectPath": "D:\\GitRepository\\projectSemester\\API\\API.csproj",
       "packagesPath": "C:\\Users\\Max\\.nuget\\packages\\",
-      "outputPath": "D:\\GitRepository\\backend\\API\\obj\\",
+      "outputPath": "D:\\GitRepository\\projectSemester\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Max\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -231,6 +253,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "DataAnnotationsExtensions": {
+            "target": "Package",
+            "version": "[5.0.1.27, )"
+          },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[5.6.3, )"
@@ -257,5 +283,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Le package 'DataAnnotationsExtensions 5.0.1.27' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' au lieu du framework cible du projet 'net5.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "libraryId": "DataAnnotationsExtensions",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
 }
