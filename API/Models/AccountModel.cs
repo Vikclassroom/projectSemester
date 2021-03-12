@@ -13,6 +13,9 @@ namespace API.Models
         [Required]
         public string Password { get; set; }
         public string UrlPicture { get; set; }
+
+        public int ListId { get; set; }
+        public ListModel ListModel { get; set; }
         
     }
 }

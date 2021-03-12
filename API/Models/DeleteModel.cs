@@ -7,10 +7,10 @@ namespace API.Models
     {
         [Key]
         public int DeleteId { get; set; }
-        [Required]
-        public AccountModel AccountId { get; set; }
-        [Required]
-        public ListModel ListId { get; set; }
+        
+        public int AccountId { get; set; }
+        public AccountModel AccountModel { get; set; }
+        
         public DateTime Date { get; set; }
     }
 }
