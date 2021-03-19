@@ -7,7 +7,7 @@ namespace API.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Accounts",
+                name: "Account",
                 columns: table => new
                 {
                     AccountId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -18,11 +18,11 @@ namespace API.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.AccountId);
+                    table.PrimaryKey("PK_Account", x => x.AccountId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Musics",
+                name: "Music",
                 columns: table => new
                 {
                     MusicId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -32,11 +32,11 @@ namespace API.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Musics", x => x.MusicId);
+                    table.PrimaryKey("PK_Music", x => x.MusicId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Links",
+                name: "Link",
                 columns: table => new
                 {
                     LinkId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -46,42 +46,42 @@ namespace API.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Links", x => x.LinkId);
+                    table.PrimaryKey("PK_Link", x => x.LinkId);
                     table.ForeignKey(
-                        name: "FK_Links_Accounts_AccountId",
+                        name: "FK_Link_Account_AccountId",
                         column: x => x.AccountId,
-                        principalTable: "Accounts",
+                        principalTable: "Account",
                         principalColumn: "AccountId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Links_Musics_MusicId",
+                        name: "FK_Link_Music_MusicId",
                         column: x => x.MusicId,
-                        principalTable: "Musics",
+                        principalTable: "Music",
                         principalColumn: "MusicId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Links_AccountId",
-                table: "Links",
+                name: "IX_Link_AccountId",
+                table: "Link",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Links_MusicId",
-                table: "Links",
+                name: "IX_Link_MusicId",
+                table: "Link",
                 column: "MusicId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Links");
+                name: "Link");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "Account");
 
             migrationBuilder.DropTable(
-                name: "Musics");
+                name: "Music");
         }
     }
 }

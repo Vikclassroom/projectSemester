@@ -1,6 +1,5 @@
 ﻿using API.Data;
 using API.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,28 +11,28 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController : ControllerBase
+    public class MusicController : ControllerBase
     {
         private readonly Context _context;
 
-        public AccountController(Context context)
+        public MusicController(Context context)
         {
             _context = context;
         }
 
-        //Get account/
+        //Get music/
         [HttpGet]
-        public async Task<ActionResult<List<Account>>> GetAccounts()
+        public async Task<ActionResult<List<Music>>> GetMusics()
         {
-            var accounts = await _context.Accounts.ToListAsync();
-            
+            var accounts = await _context.Musics.ToListAsync();
+
             return Ok(accounts);
         }
-        //Get account/id
+        //Get music/id
         [HttpGet("{id}")]
-        public async Task<ActionResult<Account>> GetAccount(int id)
+        public async Task<ActionResult<Music>> GetMusic(int id)
         {
-            return await _context.Accounts.FindAsync(id);
+            return await _context.Musics.FindAsync(id);
         }
     }
 }

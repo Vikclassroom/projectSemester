@@ -2,6 +2,7 @@
 
 namespace API.Entities
 {
+    [Table("Link")]
     public class Link
     {
         public int LinkId { get; set; }

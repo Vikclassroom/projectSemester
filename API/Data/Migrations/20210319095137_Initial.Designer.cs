@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210319010122_Initial")]
+    [Migration("20210319095137_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Account");
                 });
 
             modelBuilder.Entity("API.Entities.Link", b =>
@@ -57,7 +57,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("MusicId");
 
-                    b.ToTable("Links");
+                    b.ToTable("Link");
                 });
 
             modelBuilder.Entity("API.Entities.Music", b =>
@@ -74,7 +74,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("MusicId");
 
-                    b.ToTable("Musics");
+                    b.ToTable("Music");
                 });
 
             modelBuilder.Entity("API.Entities.Link", b =>
