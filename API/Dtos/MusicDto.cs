@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace API.Dtos
 {
-    public class LinkDto
+    public class MusicDto
     {
+        public int MusicId { get; set; }
+        public string Title { get; set; }
+        public string Artist { get; set; }
         public int LinkId { get; set; }
-        public int AccountId { get; set; }
     }
 }

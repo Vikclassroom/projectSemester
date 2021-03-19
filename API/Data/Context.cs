@@ -11,6 +11,6 @@ namespace API.Data
 
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Link> Links { get; set; }
-        public DbSet<List> Lists { get; set; }
+        public DbSet<Music> Musics { get; set; }
     }
 }
