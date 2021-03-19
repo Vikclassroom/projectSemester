@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities
 {
@@ -11,7 +12,5 @@ namespace API.Entities
         [Required]
         public string Password { get; set; }
         public string UrlPicture { get; set; }
-        public Link Link { get; set; }
-        public int LinkId { get; set; }
     }
 }

@@ -9,5 +9,6 @@ namespace API.Dtos
     {
         public int LinkId { get; set; }
         public int AccountId { get; set; }
+        public int MusicId { get; set; }
     }
 }

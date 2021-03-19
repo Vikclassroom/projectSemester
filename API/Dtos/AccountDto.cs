@@ -11,6 +11,5 @@ namespace API.Dtos
         public string Email { get; set; }
         public string Password { get; set; }
         public string UrlPicture { get; set; }
-        public int LinkId { get; set; }
     }
 }
