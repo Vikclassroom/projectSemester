@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using API.Dtos;
 using API.Entities;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,24 +16,29 @@ namespace API.Controllers
     public class LinkController : ControllerBase
     {
         private readonly Context _context;
+        private readonly IMapper _mapper;
 
-        public LinkController(Context context)
+        public LinkController(Context context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-        
-        //Get link/
+
+        //Get links/
         [HttpGet]
-        public async Task<ActionResult<List<LinkDto>>> GetLinks()
+        public async Task<ActionResult<IReadOnlyList<LinkDto>>> GetLinks()
         {
             var links = await _context.Links.ToListAsync();
 
-            return links.Select(links => new LinkDto
-            {
-                LinkId = links.LinkId,
-                AccountId = links.AccountId,
-                MusicId = links.MusicId
-            }).ToList();
+            return Ok(_mapper.Map<IReadOnlyList<Link>, IReadOnlyList<LinkDto>>(links));
+        }
+        //Get link/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<LinkDto>> GetLink(int id)
+        {
+            var link = await _context.Links.FindAsync(id);
+
+            return _mapper.Map<Link, LinkDto>(link);
         }
     }
 }

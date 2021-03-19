@@ -169,3 +169,5 @@ D:\GitRepository\projectSemester\API\obj\Debug\net5.0\Razor\Views\Accounts\Index
 D:\GitRepository\projectSemester\API\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 D:\GitRepository\projectSemester\API\obj\Debug\net5.0\API.RazorTargetAssemblyInfo.cs
 D:\GitRepository\projectSemester\API\obj\Debug\net5.0\API.Views.pdb
+D:\GitRepository\projectSemester\API\bin\Debug\net5.0\AutoMapper.dll
+D:\GitRepository\projectSemester\API\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
