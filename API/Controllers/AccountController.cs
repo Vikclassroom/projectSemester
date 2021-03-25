@@ -1,9 +1,12 @@
 ﻿using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,7 +28,6 @@ namespace API.Controllers
         public async Task<ActionResult<List<Account>>> GetAccounts()
         {
             var accounts = await _context.Accounts.ToListAsync();
-
             return Ok(accounts);
         }
         //Get account/id
@@ -42,7 +44,6 @@ namespace API.Controllers
             if (ModelState.IsValid) {
                 _context.AddAsync(account);
                 await _context.SaveChangesAsync();
-
                 return Ok();
             }
 
@@ -98,7 +99,6 @@ namespace API.Controllers
             {
                 return StatusCode(500, "Erreur à la suppression du compte");
             }
-
         }
 
         //true or false

@@ -1528,7 +1528,7 @@
           "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.IO.FileSystem.dll": {}
         }
       },
       "System.IO.FileSystem.Primitives/4.3.0": {
@@ -1537,7 +1537,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.IO.FileSystem.Primitives.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.IO.FileSystem.Primitives.dll": {}
@@ -1867,7 +1867,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Runtime.Handles.dll": {}
         }
       },
       "System.Runtime.InteropServices/4.3.0": {
@@ -7724,7 +7724,8 @@
       "Microsoft.EntityFrameworkCore.Sqlite >= 5.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.4",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2",
-      "Swashbuckle.AspNetCore >= 6.1.1"
+      "Swashbuckle.AspNetCore >= 6.1.1",
+      "System.IO.FileSystem >= 4.3.0"
     ]
   },
   "packageFolders": {
@@ -7801,6 +7802,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.1.1, )"
+          },
+          "System.IO.FileSystem": {
+            "target": "Package",
+            "version": "[4.3.0, )"
           }
         },
         "imports": [

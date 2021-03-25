@@ -2,6 +2,7 @@ using API.Data;
 using API.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +39,10 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
+            else 
+            {
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
 
@@ -45,9 +50,16 @@ namespace API
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Je n'ai rien trouvé");
             });
         }
     }
