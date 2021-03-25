@@ -8,9 +8,7 @@ namespace API.Helpers
     {
         public Mapping()
         {
-            CreateMap<Link, LinkDto>()
-                .ForMember(d => d.AccountId, o => o.MapFrom(s => s.Account.AccountId))
-                .ForMember(d => d.MusicId, o => o.MapFrom(s => s.Music.MusicId));
+            CreateMap<Link, LinkDto>();
         }
     }
 }

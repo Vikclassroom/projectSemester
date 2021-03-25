@@ -30,7 +30,7 @@ namespace API.Controllers
         {
             var links = await _context.Links.ToListAsync();
 
-            return Ok(_mapper.Map<IReadOnlyList<Link>, IReadOnlyList<LinkDto>>(links));
+            return Ok(_mapper.Map<IReadOnlyList<LinkDto>>(links));
         }
         //Get link/5
         [HttpGet("{id}")]
