@@ -42,7 +42,7 @@ namespace API.Controllers
         public async Task<ActionResult<Account>> CreateAccount([Bind("AccountId,Email,Password,UrlPicture")] Account account)
         {
             if (ModelState.IsValid) {
-                _context.AddAsync(account);
+                await _context.AddAsync(account);
                 await _context.SaveChangesAsync();
                 return Ok();
             }

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using API.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -18,32 +16,27 @@ namespace API.Controllers
         {
             _environment = environment;
         }
-        public class FileUpload
-        {
-            public IFormFile files { get; set; }
-        }
 
         [HttpPost]
-        public async Task<string> HandleImg(FileUpload objFile)
+        public async Task<string> HandleImg([FromForm] FileUpload objFile)
         {
             try
             {
-                if (objFile.files.Length > 0)
+                if (objFile.Files.Length > 0)
                 {
-                    if (!Directory.Exists(_environment.WebRootPath + "\\Assets\\Img\\"))
+                    string path = _environment.WebRootPath + "\\Assets\\img\\";
+                    if (!Directory.Exists(path))
                     {
-                        Directory.CreateDirectory(_environment.WebRootPath + "\\Assets\\Img\\");
+                        Directory.CreateDirectory(path);
                     }
-                    using (FileStream fileStream = System.IO.File.Create(_environment.WebRootPath + "\\Assets\\Img\\" + objFile.files.FileName))
-                    {
-                        objFile.files.CopyTo(fileStream);
-                        fileStream.Flush();
-                        return "\\Assets\\Img\\" + objFile.files.FileName;
-                    }
+                    using FileStream fileStream = System.IO.File.Create(path + objFile.Files.FileName);
+                    await objFile.Files.CopyToAsync(fileStream);
+                    fileStream.Flush();
+                    return path + objFile.Files.FileName;
                 }
                 else
                 {
-                    return "Échec";
+                    return "Aucune image sélectionné";
                 }
             }
             catch (Exception e)

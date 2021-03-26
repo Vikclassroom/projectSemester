@@ -15601,37 +15601,6 @@
     "CSharpLanguageVersion": 900
   },
   "RootNamespace": "API",
-  "Documents": [
-    {
-      "FilePath": "d:\\GitRepository\\projectSemester\\API\\Views\\Accounts\\Edit.cshtml",
-      "TargetPath": "Views\\Accounts\\Edit.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "d:\\GitRepository\\projectSemester\\API\\Views\\Accounts\\Delete.cshtml",
-      "TargetPath": "Views\\Accounts\\Delete.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "d:\\GitRepository\\projectSemester\\API\\Views\\Accounts\\Index.cshtml",
-      "TargetPath": "Views\\Accounts\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "d:\\GitRepository\\projectSemester\\API\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "d:\\GitRepository\\projectSemester\\API\\Views\\Accounts\\Create.cshtml",
-      "TargetPath": "Views\\Accounts\\Create.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "d:\\GitRepository\\projectSemester\\API\\Views\\Accounts\\Details.cshtml",
-      "TargetPath": "Views\\Accounts\\Details.cshtml",
-      "FileKind": "mvc"
-    }
-  ],
+  "Documents": [],
   "SerializationFormat": "0.2"
 }

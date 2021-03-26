@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Max\\Desktop\\projectSemester\\API\\API.csproj": {}
+    "D:\\GitRepository\\projectSemester\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Max\\Desktop\\projectSemester\\API\\API.csproj": {
+    "D:\\GitRepository\\projectSemester\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Max\\Desktop\\projectSemester\\API\\API.csproj",
+        "projectUniqueName": "D:\\GitRepository\\projectSemester\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Max\\Desktop\\projectSemester\\API\\API.csproj",
+        "projectPath": "D:\\GitRepository\\projectSemester\\API\\API.csproj",
         "packagesPath": "C:\\Users\\Max\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Max\\Desktop\\projectSemester\\API\\obj\\",
+        "outputPath": "D:\\GitRepository\\projectSemester\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Max\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -99,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
