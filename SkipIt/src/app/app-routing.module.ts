@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {LoginComponent} from './account/login/login.component';
-import {AccountPageComponent} from './account/account-page/account-page.component';
-import {MusicComponent} from './music/music.component';
-import {MyListComponent} from './my-list/my-list.component';
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './core/home/home.component';
+import { LoginComponent } from './account/login/login.component';
+import { MusicComponent } from './core/music/music.component';
+import { MyListComponent } from './core/my-list/my-list.component';
+import { RegisterComponent } from './account/register/register.component';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'account', component: AccountPageComponent},
+  {path: 'account', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)},
   {path: 'music', component: MusicComponent},
   {path: 'myList', component: MyListComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}

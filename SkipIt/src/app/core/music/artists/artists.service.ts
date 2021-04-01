@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment, environmentMusic} from '../../../environments/environment';
+import {environment, environmentMusic} from '../../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {ChartParams} from './chartParams';
