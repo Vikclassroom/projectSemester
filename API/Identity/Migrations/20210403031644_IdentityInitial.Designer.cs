@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20210402222720_IdentityInitial")]
+    [Migration("20210403031644_IdentityInitial")]
     partial class IdentityInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,6 +67,9 @@ namespace API.Identity.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Token")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("TwoFactorEnabled")

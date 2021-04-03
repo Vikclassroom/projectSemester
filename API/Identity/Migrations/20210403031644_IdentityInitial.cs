@@ -28,6 +28,7 @@ namespace API.Identity.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     DisplayFirstName = table.Column<string>(type: "TEXT", nullable: true),
                     DisplayEmail = table.Column<string>(type: "TEXT", nullable: true),
+                    Token = table.Column<string>(type: "TEXT", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),

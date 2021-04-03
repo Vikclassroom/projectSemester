@@ -6,5 +6,6 @@ namespace API.Identity
     {
         public string DisplayFirstName { get; set; }
         public string DisplayEmail { get; set; }
+        public string Token { get; set; }
     }
 }

@@ -99,8 +99,52 @@ namespace API.Controllers
             {
                 try
                 {
-                    _context.Update(account);
+                    var placeholder = "placeholder.png";
+                    var baseImg = account.UrlPicture;
+                    if (account.UrlPicture == null || account.UrlPicture == "string") 
+                    {
+                        baseImg = placeholder;
+                    }
+
+                    var dataAccount = new Account
+                    {
+                        AccountId = account.AccountId,
+                        Email = account.Email,
+                        Password = account.Password,
+                        UrlPicture = baseImg    
+                    };
+
+                    var dataAccountLogin = new AppAccount
+                    {
+                        Email = account.Email,
+                        PasswordHash = account.Password
+                    };
+
+                    var accountToUpdate = await _userManager.FindByEmailAsync(dataAccount.Email);
+                    if (accountToUpdate == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    if (dataAccountLogin.Email != null)
+                    {
+                        await _userManager.ChangeEmailAsync(accountToUpdate, dataAccount.Email, accountToUpdate.Token);
+                    }
+
+                    if (dataAccountLogin.PasswordHash != null)
+                    {
+                        await _userManager.ChangePasswordAsync(accountToUpdate, dataAccount.Password, accountToUpdate.Token);
+                    }
+
+                    _context.Update(dataAccount);
                     await _context.SaveChangesAsync();
+
+                    return new Account
+                    {
+                        AccountId = dataAccount.AccountId,
+                        Email = accountToUpdate.Email,
+                        Password = accountToUpdate.PasswordHash
+                    };
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,6 +173,9 @@ namespace API.Controllers
                 _context.Accounts.Remove(account);
                 await _context.SaveChangesAsync();
 
+                var thisAccountDelete = await _userManager.FindByEmailAsync(account.Email);
+                await _userManager.DeleteAsync(thisAccountDelete);
+
                 return Ok($"Le compte avec l'id {id} à bien été supprimé");
             }
             catch (Exception)
@@ -148,6 +195,18 @@ namespace API.Controllers
         {
             return await _userManager.FindByEmailAsync(email) != null;
         }
+
+      /*  [HttpGet("currentconnected")]
+        public async Task<ActionResult<Account>> CheckCurrentConnected(AccountDto accountDto)
+        {
+            var email = new Account
+            {
+                Email = accountDto.Email
+            };
+
+            var accData = await _userManager.FindByEmailAsync(email.Email);
+
+        }*/
     }
 }
 
