@@ -90,6 +90,8 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Account>> EditAccount(int id, [Bind("AccountId,Email,Password,UrlPicture")] Account account)
         {
+            var currentEmail = GetCurrentEmailBeforeEdit();
+
             if (id != account.AccountId)
             {
                 return BadRequest();
@@ -194,6 +196,11 @@ namespace API.Controllers
         public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
         {
             return await _userManager.FindByEmailAsync(email) != null;
+        }
+
+        private string GetCurrentEmailBeforeEdit(string email)
+        {
+            return _userManager.FindByEmailAsync(email).ToString();
         }
 
       /*  [HttpGet("currentconnected")]
