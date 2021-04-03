@@ -43,16 +43,22 @@ namespace API.Controllers
 
         //Post
         [HttpPost]
-        public async Task<ActionResult<LinkDto>> CreateLink([Bind("LinkId,AccountId,MusicId")] Link link)
+        public async Task<ActionResult<LinkDto>> CreateLink(LinkDto linkDto)
         {
-            if (ModelState.IsValid)
+            var link = new LinkDto
             {
-                await _context.AddAsync(link);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
+                AccountId = linkDto.AccountId,
+                MusicId = linkDto.MusicId
+            };
 
-            return StatusCode(500, "Une erreur est survenu lors de l'ajout du compte, une information est manquante");
+            await _context.AddAsync(link);
+            await _context.SaveChangesAsync();
+            return new LinkDto
+            {
+                LinkId = linkDto.LinkId,
+                AccountId = link.AccountId,
+                MusicId = link.MusicId
+            };
         }
 
         //Delete

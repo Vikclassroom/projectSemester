@@ -1,5 +1,7 @@
 using API.Data;
+using API.Extensions;
 using API.Helpers;
+using API.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +25,12 @@ namespace API
 
             services.AddControllers();
             services.AddDbContext<Context>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            //liaison phyisique entre le context et l appidentitydbcontext. Séparation par une nouvelle db
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseSqlite(Configuration.GetConnectionString("IdentityConnection"));
+            });
+            services.AddIdServices();
             services.AddAutoMapper(typeof(Mapping));
             services.AddSwaggerGen(c =>
             {

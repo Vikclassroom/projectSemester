@@ -17,7 +17,10 @@ namespace API.Controllers
             _environment = environment;
         }
 
-        [HttpPost]
+       /* [HttpGet("download")]
+        public async Task<string> GetImg()$*/
+
+        [HttpPost("upload")]
         public async Task<string> HandleImg([FromForm] FileUpload objFile)
         {
             try

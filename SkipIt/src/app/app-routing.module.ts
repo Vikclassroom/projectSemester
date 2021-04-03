@@ -6,12 +6,13 @@ import { MusicComponent } from './core/music/music.component';
 import { MyListComponent } from './core/my-list/my-list.component';
 import { RegisterComponent } from './account/register/register.component';
 import { AccountComponent } from './account/account.component';
+import {AuthGuard} from './core/Guard/auth.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'account', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)},
   {path: 'music', component: MusicComponent},
-  {path: 'myList', component: MyListComponent},
+  {path: 'myList', canActivate: [AuthGuard], component: MyListComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

@@ -17,14 +17,14 @@ namespace API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly Context _context;
-        private readonly UserManager<AppAccount> _userManager;
         private readonly SignInManager<AppAccount> _signInManager;
+        private readonly UserManager<AppAccount> _userManager;
 
-        public AccountController(Context context, UserManager<AppAccount> userManager, SignInManager<AppAccount> signInManager)
+        public AccountController(Context context, SignInManager<AppAccount> signInManager, UserManager<AppAccount> userManager)
         {
             _context = context;
-            _userManager = userManager;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         //Get account/
@@ -41,20 +41,49 @@ namespace API.Controllers
             return await _context.Accounts.FindAsync(id);
         }
 
-        //Post
-        [HttpPost]
-        public async Task<ActionResult<Account>> CreateAccount([Bind("AccountId,Email,Password,UrlPicture")] Account account)
+        [HttpPost("Login")]
+        public async Task<ActionResult<AccountDto>> LoginAccount(LoginDto loginDto)
         {
-            if (ModelState.IsValid) {
-                if (!EmailExists(account.Email)) { 
-                    await _context.AddAsync(account);
-                    await _context.SaveChangesAsync();
-                    return Ok();
-                }
-                return StatusCode(409, "Cet email est déjà utilisé");
-            }
+            var account = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (account == null) return Unauthorized("Cette utilisateur n'existe pas");
+            var result = await _signInManager.CheckPasswordSignInAsync(account, loginDto.Password, false);
+            if (!result.Succeeded) return Unauthorized("Le mot de passe est faux");
 
-            return StatusCode(500, "Une erreur est survenu lors de l'ajout du compte, une information est manquante");
+            return new AccountDto
+            {
+                FirstName = account.UserName,
+                Email = account.Email
+            };
+
+        }
+
+        //Post
+        [HttpPost("Register")]
+        public async Task<ActionResult<AccountDto>> RegisterAccount(RegisterDto registerDto)
+        {
+            var account = new AppAccount
+            {
+                UserName = registerDto.FirstName,
+                Email = registerDto.Email
+            };
+            var result = await _userManager.CreateAsync(account, registerDto.Password);
+            if (!result.Succeeded) return BadRequest();
+
+            var accData = new Account
+            {
+                Email = account.Email,
+                Password = account.PasswordHash,
+                UrlPicture = "placeholder.png"
+            };
+
+            await _context.Accounts.AddAsync(accData);
+            await _context.SaveChangesAsync();
+
+            return new AccountDto
+            {
+                FirstName = account.UserName,
+                Email = account.Email
+            };
         }
 
         //Put
@@ -108,54 +137,16 @@ namespace API.Controllers
             }
         }
 
-        // User endpoint
-
-        [HttpPost("login")]
-        public async Task<ActionResult<AccountDto>> Login(LoginDto loginDto)
-        {
-            var user = await _userManager.FindByEmailAsync(loginDto.Email);
-
-            if (user == null) return StatusCode(404, "Le compte n'existe pas");
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-            if (!result.Succeeded) return StatusCode(401,"Le mot de passe ou le login son incorrect");
-
-            return new AccountDto
-            {
-                Email = user.Email
-            };
-        }
-
-        [HttpPost("register")]
-        public async Task<ActionResult<AccountDto>> Register(RegisterDto registerDto)
-        {
-            var user = new AppAccount
-            {
-                Email = registerDto.Email
-            };
-
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
-
-            if (!result.Succeeded) return BadRequest();
-
-            return new AccountDto
-            {
-                Email = user.Email
-            };
-        }
-
-        // Private Method bool
-
         //true or false
         private bool AccountExists(int id)
         {
             return _context.Accounts.Any(e => e.AccountId == id);
         }
 
-        private bool EmailExists(string email)
+        [HttpGet("emailexists")]
+        public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
         {
-            return _context.Accounts.Any(e => e.Email == email);
+            return await _userManager.FindByEmailAsync(email) != null;
         }
     }
 }

@@ -30,7 +30,7 @@ export class AccountService {
 
   // tslint:disable-next-line:typedef
   register(values: any) {
-    return this.http.post(this.baseUrl + 'api/account', values).pipe(
+    return this.http.post(this.baseUrl + 'api/account/register', values).pipe(
       map((account: IAccount) => {
         if (account){
           localStorage.setItem('email', account.email);
