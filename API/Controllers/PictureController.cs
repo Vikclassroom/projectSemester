@@ -32,13 +32,21 @@ namespace API.Controllers
             {
                 if (objFile.Files.Length > 0)
                 {
-                    
+
+                    var currentAccount = await _context.Accounts.FindAsync(idCurrentAccount);
+                    var lastUrlPicture = currentAccount.UrlPicture;
                     string path = _environment.WebRootPath + "\\Assets\\img\\";
+
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);
                     }
-                    
+
+                    if (lastUrlPicture != "placeholder.png")
+                    {
+                        System.IO.File.Delete(path + lastUrlPicture);
+                    }
+
                     var fileName = objFile.Files.FileName.ToString();
                     var explode = fileName.Split('.');
                     var extension = explode.Last();
@@ -56,7 +64,6 @@ namespace API.Controllers
                     await objFile.Files.CopyToAsync(fileStream);
                     fileStream.Flush();
 
-                    var currentAccount = await _context.Accounts.FindAsync(idCurrentAccount);
                     currentAccount.UrlPicture = newName;
                     _context.Update(currentAccount);
                     await _context.SaveChangesAsync();

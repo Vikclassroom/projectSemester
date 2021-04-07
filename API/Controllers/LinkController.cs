@@ -41,26 +41,6 @@ namespace API.Controllers
             return _mapper.Map<Link, LinkDto>(link);
         }
 
-        //Post
-        [HttpPost]
-        public async Task<ActionResult<LinkDto>> CreateLink(LinkDto linkDto)
-        {
-            var link = new LinkDto
-            {
-                AccountId = linkDto.AccountId,
-                MusicId = linkDto.MusicId
-            };
-
-            await _context.AddAsync(link);
-            await _context.SaveChangesAsync();
-            return new LinkDto
-            {
-                LinkId = linkDto.LinkId,
-                AccountId = link.AccountId,
-                MusicId = link.MusicId
-            };
-        }
-
         //Delete
         [HttpDelete("{id}")]
         public async Task<ActionResult<LinkDto>> DeleteLink(int id)

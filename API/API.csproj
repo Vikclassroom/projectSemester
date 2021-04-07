@@ -27,11 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\assets\placeholder\placeholder.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\assets\img\" />
+    <None Include="wwwroot\assets\img\placeholder.png" />
   </ItemGroup>
 
 </Project>

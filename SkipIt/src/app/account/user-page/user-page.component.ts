@@ -14,6 +14,6 @@ export class UserPageComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   public getImg(){
-
+    this.UrlPicture = localStorage.getItem('urlPicture');
   }
 }

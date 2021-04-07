@@ -37,17 +37,40 @@ namespace API.Controllers
 
         //Post
         [HttpPost]
-        public async Task<ActionResult<Music>> CreateMusic([Bind("MusicId,Title,Artist")] Music music)
+        public async Task<ActionResult<Music>> CreateMusic([Bind("Title,Artist")] Music music, int accountId)
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(music);
+                var musicRow = _context.Musics.Where(e => e.Title == music.Title).FirstOrDefault();
+
+                if (musicRow == null)
+                {
+                    var musics = new Music
+                    {
+                        Artist = music.Artist,
+                        Title = music.Title
+                    };
+
+                    await _context.AddAsync(musics);
+                    await _context.SaveChangesAsync();
+                    musicRow = await _context.Musics.FindAsync(musics.MusicId);
+                }
+
+                var link = new Link
+                {
+                    AccountId = accountId,
+                    MusicId = musicRow.MusicId
+                };
+
+                await _context.Links.AddAsync(link);
                 await _context.SaveChangesAsync();
 
-                return Ok();
+                return new Music 
+                { 
+                    Artist = music.Artist,
+                    Title = music.Title
+                };
             }
-
-
 
             return StatusCode(500, "Une erreur est survenu lors de l'ajout du compte, une information est manquante");
         }
