@@ -7,12 +7,10 @@ import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 import { HomeComponent } from './core/home/home.component';
 import { MusicComponent } from './core/music/music.component';
 import { AppRoutingModule } from './app-routing.module';
-import { NavMusicComponent } from './core/music/nav-music/nav-music.component';
 import { ArtistsComponent } from './core/music/artists/artists.component';
 import { MyListComponent } from './core/my-list/my-list.component';
-import { NavMyListComponent } from './core/my-list/nav-my-list/nav-my-list.component';
-import { FormsModule } from '@angular/forms';
-import { AccountComponent } from './account/account.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { SharedComponent } from './shared/shared.component';
 
 @NgModule({
   declarations: [
@@ -20,17 +18,16 @@ import { AccountComponent } from './account/account.component';
     NavBarComponent,
     HomeComponent,
     MusicComponent,
-    NavMusicComponent,
     ArtistsComponent,
     MyListComponent,
-    NavMyListComponent,
-    AccountComponent
+    SharedComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

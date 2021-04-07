@@ -1,8 +1,5 @@
 ﻿using API.Data;
-using API.Dtos;
 using API.Entities;
-using API.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,14 +14,10 @@ namespace API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly Context _context;
-        private readonly SignInManager<AppAccount> _signInManager;
-        private readonly UserManager<AppAccount> _userManager;
 
-        public AccountController(Context context, SignInManager<AppAccount> signInManager, UserManager<AppAccount> userManager)
+        public AccountController(Context context)
         {
             _context = context;
-            _signInManager = signInManager;
-            _userManager = userManager;
         }
 
         //Get account/
@@ -32,6 +25,7 @@ namespace API.Controllers
         public async Task<ActionResult<List<Account>>> GetAccounts()
         {
             var accounts = await _context.Accounts.ToListAsync();
+
             return Ok(accounts);
         }
         //Get account/id
@@ -41,122 +35,50 @@ namespace API.Controllers
             return await _context.Accounts.FindAsync(id);
         }
 
-        [HttpPost("Login")]
-        public async Task<ActionResult<AccountDto>> LoginAccount(LoginDto loginDto)
-        {
-            var account = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (account == null) return Unauthorized("Cette utilisateur n'existe pas");
-            var result = await _signInManager.CheckPasswordSignInAsync(account, loginDto.Password, false);
-            if (!result.Succeeded) return Unauthorized("Le mot de passe est faux");
-
-            return new AccountDto
-            {
-                FirstName = account.UserName,
-                Email = account.Email
-            };
-
-        }
-
         //Post
-        [HttpPost("Register")]
-        public async Task<ActionResult<AccountDto>> RegisterAccount(RegisterDto registerDto)
+        [HttpPost]
+        public async Task<ActionResult<Account>> CreateAccount([Bind("Email,Password")] Account account)
         {
-            var account = new AppAccount
+            if (ModelState.IsValid)
             {
-                UserName = registerDto.FirstName,
-                Email = registerDto.Email
-            };
-            var result = await _userManager.CreateAsync(account, registerDto.Password);
-            if (!result.Succeeded) return BadRequest();
+                account.UrlPicture = "placeholder.png";
+                await _context.AddAsync(account);
+                await _context.SaveChangesAsync();
 
-            var accData = new Account
-            {
-                Email = account.Email,
-                Password = account.PasswordHash,
-                UrlPicture = "placeholder.png"
-            };
+                return new Account
+                { 
+                    AccountId = account.AccountId,
+                    Email = account.Email,
+                    Password = account.Password,
+                    UrlPicture = account.UrlPicture
+                };
+            }
 
-            await _context.Accounts.AddAsync(accData);
-            await _context.SaveChangesAsync();
-
-            return new AccountDto
-            {
-                FirstName = account.UserName,
-                Email = account.Email
-            };
+            return StatusCode(500, "Une erreur est survenu lors de l'ajout du compte, une information est manquante");
         }
 
         //Put
         [HttpPut("{id}")]
-        public async Task<ActionResult<Account>> EditAccount(int id, [Bind("AccountId,Email,Password,UrlPicture")] Account account)
+        public async Task<ActionResult<Account>> EditAccount(int id, [Bind("Email,Password")] Account account)
         {
-            var currentEmail = GetCurrentEmailBeforeEdit();
-
-            if (id != account.AccountId)
+            if (AccountExists(id) == false)
             {
                 return BadRequest();
             }
 
             if (ModelState.IsValid)
             {
-                try
+                _context.Update(account);
+                await _context.SaveChangesAsync();
+
+                return new Account
                 {
-                    var placeholder = "placeholder.png";
-                    var baseImg = account.UrlPicture;
-                    if (account.UrlPicture == null || account.UrlPicture == "string") 
-                    {
-                        baseImg = placeholder;
-                    }
-
-                    var dataAccount = new Account
-                    {
-                        AccountId = account.AccountId,
-                        Email = account.Email,
-                        Password = account.Password,
-                        UrlPicture = baseImg    
-                    };
-
-                    var dataAccountLogin = new AppAccount
-                    {
-                        Email = account.Email,
-                        PasswordHash = account.Password
-                    };
-
-                    var accountToUpdate = await _userManager.FindByEmailAsync(dataAccount.Email);
-                    if (accountToUpdate == null)
-                    {
-                        return BadRequest();
-                    }
-
-                    if (dataAccountLogin.Email != null)
-                    {
-                        await _userManager.ChangeEmailAsync(accountToUpdate, dataAccount.Email, accountToUpdate.Token);
-                    }
-
-                    if (dataAccountLogin.PasswordHash != null)
-                    {
-                        await _userManager.ChangePasswordAsync(accountToUpdate, dataAccount.Password, accountToUpdate.Token);
-                    }
-
-                    _context.Update(dataAccount);
-                    await _context.SaveChangesAsync();
-
-                    return new Account
-                    {
-                        AccountId = dataAccount.AccountId,
-                        Email = accountToUpdate.Email,
-                        Password = accountToUpdate.PasswordHash
-                    };
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AccountExists(account.AccountId))
-                    {
-                        return NotFound($"Le compte {id} n'a pas été trouvé");
-                    }
-                }
+                    Email = account.Email,
+                    Password = account.Password,
+                    UrlPicture = account.UrlPicture
+                };
             }
-            return NoContent();
+            return BadRequest();
         }
 
         //Delete
@@ -175,45 +97,19 @@ namespace API.Controllers
                 _context.Accounts.Remove(account);
                 await _context.SaveChangesAsync();
 
-                var thisAccountDelete = await _userManager.FindByEmailAsync(account.Email);
-                await _userManager.DeleteAsync(thisAccountDelete);
-
-                return Ok($"Le compte avec l'id {id} à bien été supprimé");
+                return Ok($"Le compte avec l'{id} à bien été supprimé");
             }
             catch (Exception)
             {
                 return StatusCode(500, "Erreur à la suppression du compte");
             }
+
         }
 
         //true or false
-        private bool AccountExists(int id)
+        private bool AccountExists(int? id)
         {
             return _context.Accounts.Any(e => e.AccountId == id);
         }
-
-        [HttpGet("emailexists")]
-        public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
-        {
-            return await _userManager.FindByEmailAsync(email) != null;
-        }
-
-        private string GetCurrentEmailBeforeEdit(string email)
-        {
-            return _userManager.FindByEmailAsync(email).ToString();
-        }
-
-      /*  [HttpGet("currentconnected")]
-        public async Task<ActionResult<Account>> CheckCurrentConnected(AccountDto accountDto)
-        {
-            var email = new Account
-            {
-                Email = accountDto.Email
-            };
-
-            var accData = await _userManager.FindByEmailAsync(email.Email);
-
-        }*/
     }
 }
-

@@ -30,4 +30,8 @@
     <None Include="wwwroot\assets\placeholder\placeholder.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\img\" />
+  </ItemGroup>
+
 </Project>
