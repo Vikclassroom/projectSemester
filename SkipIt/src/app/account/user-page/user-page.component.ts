@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-page',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserPageComponent implements OnInit {
   UrlPicture: string;
+  public baseUrl = environment.apiUrl;
+  public path = 'assets/img/';
+
   constructor() { }
 
   ngOnInit(): void {
@@ -14,6 +18,6 @@ export class UserPageComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   public getImg(){
-    this.UrlPicture = localStorage.getItem('urlPicture');
+    return this.UrlPicture = localStorage.getItem('urlPicture');
   }
 }

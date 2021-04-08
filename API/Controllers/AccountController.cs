@@ -35,6 +35,18 @@ namespace API.Controllers
             return await _context.Accounts.FindAsync(id);
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult<Account>> Login(string email, string password)
+        {
+            var user = await _context.Accounts.Where(e => e.Email == email).Where(p => p.Password == password).FirstOrDefaultAsync();
+            if (user != null)
+            {
+                return user;
+            }
+
+            return BadRequest("Le mot de passe ou l\'email est incorrect ou inexistant");
+        }
+
         //Post
         [HttpPost]
         public async Task<ActionResult<Account>> CreateAccount([Bind("Email,Password")] Account account)
@@ -110,6 +122,18 @@ namespace API.Controllers
         private bool AccountExists(int? id)
         {
             return _context.Accounts.Any(e => e.AccountId == id);
+        }
+
+        [HttpGet("emailExist")]
+        public async Task<ActionResult<bool>> EmailExist(string email) 
+        {
+            var doesExist = await _context.Accounts.Where(e => e.Email == email).FirstOrDefaultAsync();
+            if (doesExist == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

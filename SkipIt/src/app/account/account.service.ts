@@ -17,29 +17,6 @@ export class AccountService {
   constructor(private http: HttpClient, private router: Router) { }
 
   // tslint:disable-next-line:typedef
-  login(values: any){
-    return this.http.post(this.baseUrl + 'api/account/login', values).pipe(
-      map((account: IAccount) => {
-        if (account) {
-          localStorage.setItem('email', account.email);
-          this.connectedAccountSource.next(account);
-        }
-      })
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  register(values: any) {
-    return this.http.post(this.baseUrl + 'api/account/register', values).pipe(
-      map((account: IAccount) => {
-        if (account){
-          localStorage.setItem('email', account.email);
-        }
-      })
-    );
-  }
-
-  // tslint:disable-next-line:typedef
   logout() {
     localStorage.removeItem('email');
     this.connectedAccountSource.next(null);

@@ -72,7 +72,7 @@ namespace API.Controllers
                 };
             }
 
-            return StatusCode(500, "Une erreur est survenu lors de l'ajout du compte, une information est manquante");
+            return StatusCode(500, "Une erreur est survenu lors de l'ajout de la musique, une information est manquante");
         }
 
         //Delete
