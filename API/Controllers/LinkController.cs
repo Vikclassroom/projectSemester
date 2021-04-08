@@ -40,29 +40,5 @@ namespace API.Controllers
 
             return _mapper.Map<Link, LinkDto>(link);
         }
-
-        //Delete
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<LinkDto>> DeleteLink(int id)
-        {
-            try
-            {
-                var link = await _context.Links.FindAsync(id);
-
-                if (link == null)
-                {
-                    return NotFound($"Le lien {id} est introuvable");
-                }
-
-                _context.Links.Remove(link);
-                await _context.SaveChangesAsync();
-
-                return Ok($"Le lien avec l'{id} à bien été supprimé");
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Erreur à la suppression du lien");
-            }
-        }
     }
 }

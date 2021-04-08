@@ -41,7 +41,7 @@ namespace API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var musicRow = _context.Musics.Where(e => e.Title == music.Title).FirstOrDefault();
+                var musicRow = await _context.Musics.Where(e => e.Title == music.Title).FirstOrDefaultAsync();
 
                 if (musicRow == null)
                 {
@@ -77,7 +77,7 @@ namespace API.Controllers
 
         //Delete
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Music>> DeleteMusic(int id)
+        public async Task<ActionResult<Music>> DeleteMusic(int id, int idAccount)
         {
             try
             {
@@ -88,10 +88,18 @@ namespace API.Controllers
                     return NotFound($"La musique {id} est introuvable");
                 }
 
-                _context.Musics.Remove(music);
+                var linkToDelete = await _context.Links.Where(m => m.MusicId == music.MusicId).Where(u => u.AccountId == idAccount).FirstOrDefaultAsync();
+                _context.Links.Remove(linkToDelete);
                 await _context.SaveChangesAsync();
 
-                return Ok($"La musique avec l'{id} à bien été supprimé");
+                var AnyOtherRelated = await _context.Links.Where(m => m.MusicId == music.MusicId).FirstOrDefaultAsync();
+                if (AnyOtherRelated == null) 
+                {
+                    _context.Musics.Remove(music);
+                    await _context.SaveChangesAsync();
+                }
+
+                return Ok($"La musique avec l'id {id} à bien été supprimé de la liste");
             }
             catch (Exception)
             {
