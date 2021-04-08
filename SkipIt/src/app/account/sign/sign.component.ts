@@ -12,12 +12,8 @@ import {confirmPassword} from './confirmPassword';
 })
 
 export class SignComponent implements OnInit {
-  registerForm: FormGroup ;
-
-  loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]),
-    password: new FormControl('', Validators.required)
-  });
+  registerForm: FormGroup;
+  loginForm: FormGroup;
 
   constructor(private service: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private fb: FormBuilder) {
     this.registerForm = fb.group({
@@ -26,6 +22,11 @@ export class SignComponent implements OnInit {
       password_retype: ['', Validators.required]
     }, {
       validator: confirmPassword('password', 'password_retype')
+    });
+
+    this.loginForm = fb.group({
+      email: ['', [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]],
+      password: ['', Validators.required]
     });
   }
 

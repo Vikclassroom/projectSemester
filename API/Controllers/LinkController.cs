@@ -32,13 +32,5 @@ namespace API.Controllers
 
             return Ok(_mapper.Map<IReadOnlyList<LinkDto>>(links));
         }
-        //Get link/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<LinkDto>> GetLink(int id)
-        {
-            var link = await _context.Links.FindAsync(id);
-
-            return _mapper.Map<Link, LinkDto>(link);
-        }
     }
 }

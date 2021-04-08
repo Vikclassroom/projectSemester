@@ -38,7 +38,10 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<Account>> Login(string email, string password)
         {
-            var user = await _context.Accounts.Where(e => e.Email == email).Where(p => p.Password == password).FirstOrDefaultAsync();
+            var user = await _context.Accounts
+                .Where(e => (e.Email == email))
+                .Where(p => (p.Password == password))
+                .FirstOrDefaultAsync();
             if (user != null)
             {
                 return user;
