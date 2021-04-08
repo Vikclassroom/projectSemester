@@ -13,8 +13,10 @@
         <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
       </svg>
     </a>
-    <a class="nav-text py-2 d-none d-md-inline-block" href="#" routerLink="/myList" routerLinkActive="active">My List</a>
-    <a class="nav-text py-2 d-none d-md-inline-block" href="#" routerLink="/music" routerLinkActive="active">Top Songs</a>
-    <a class="nav-text py-2 d-none d-md-inline-block" href="#" routerLink="/accountChild/sign" routerLinkActive="active"><strong>Sign Up / Sign In</strong></a>
+    <a *ngIf="isLogged() == true"  class="nav-text py-2 d-none d-md-inline-block" href="#" routerLink="/myList" routerLinkActive="active">My List</a>
+    <a *ngIf="isLogged() == true"  class="nav-text py-2 d-none d-md-inline-block" href="#" routerLink="/music" routerLinkActive="active">Top Songs</a>
+    <a *ngIf="isLogged() == false" class="nav-text py-2 d-none d-md-inline-block" href="#" routerLink="/accountChild/sign" routerLinkActive="active"><strong>Sign Up / Sign In</strong></a>
+    <a *ngIf="isLogged() == true"  class="nav-text py-2 d-none d-md-inline-block" href="#" routerLink="/accountChild/account/user" routerLinkActive="active"><strong>Profile</strong></a>
+    <a *ngIf="isLogged() == true" (click)="logout()" class="nav-text py-2 d-none d-md-inline-block" href="#" routerLink="/" routerLinkActive="active"><strong>Logout</strong></a>
   </div>
 </nav>

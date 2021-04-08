@@ -32,7 +32,6 @@ namespace API.Controllers
             {
                 if (objFile.Files.Length > 0)
                 {
-
                     var currentAccount = await _context.Accounts.FindAsync(idCurrentAccount);
                     var lastUrlPicture = currentAccount.UrlPicture;
                     string path = _environment.WebRootPath + "\\Assets\\img\\";

@@ -22,6 +22,7 @@ export class AuthService {
 
   // tslint:disable-next-line:typedef
   login(values: any) {
+    console.log(values);
     return this.http.post(this.baseUrl + 'api/account/login', values).pipe(
       map((user: IAccount) => {
         if (user) {
@@ -71,6 +72,7 @@ export class AuthService {
   updateUser(email: string, password: string) {
     // tslint:disable-next-line:radix
     console.log('update');
+    // tslint:disable-next-line:radix
     return this.http.put<IAccount>(this.baseUrl + 'account/' + parseInt(localStorage.getItem('id')), { email, password });
   }
 
@@ -78,7 +80,14 @@ export class AuthService {
   deleteAccount() {
     // tslint:disable-next-line:radix
     console.log('delete');
+    // tslint:disable-next-line:radix
     this.http.delete(this.baseUrl + 'account/' + parseInt(localStorage.getItem('id')));
     return this.logout();
+  }
+
+  // tslint:disable-next-line:typedef
+  updatePicture(values: any) {
+    console.log(values);
+    return this.http.post(this.baseUrl + 'picture/upload', values);
   }
 }
