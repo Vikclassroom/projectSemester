@@ -30,6 +30,7 @@ export class AuthService {
           localStorage.setItem('urlPicture', user.urlPicture);
           localStorage.setItem('id', String(user.accountId));
           this.currentUser.next(user);
+          console.log(user);
         }
       })
     );
@@ -45,6 +46,7 @@ export class AuthService {
           localStorage.setItem('urlPicture', user.urlPicture);
           localStorage.setItem('id', String(user.accountId));
           this.currentUser.next(user);
+          console.log(user);
         }
       })
     );
@@ -61,18 +63,21 @@ export class AuthService {
 
   // tslint:disable-next-line:typedef
   emailExist(email: string) {
+    console.log('prout');
     return this.http.get(this.baseUrl + 'account/emailexist' + email);
   }
 
   // tslint:disable-next-line:typedef
   updateUser(email: string, password: string) {
     // tslint:disable-next-line:radix
+    console.log('update');
     return this.http.put<IAccount>(this.baseUrl + 'account/' + parseInt(localStorage.getItem('id')), { email, password });
   }
 
   // tslint:disable-next-line:typedef
   deleteAccount() {
     // tslint:disable-next-line:radix
+    console.log('delete');
     this.http.delete(this.baseUrl + 'account/' + parseInt(localStorage.getItem('id')));
     return this.logout();
   }

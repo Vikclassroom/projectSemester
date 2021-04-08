@@ -28,12 +28,6 @@ namespace API.Controllers
 
             return Ok(accounts);
         }
-        //Get music/id
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Music>> GetMusic(int id)
-        {
-            return await _context.Musics.FindAsync(id);
-        }
 
         //Post
         [HttpPost]
