@@ -88,6 +88,11 @@ export class AuthService {
   // tslint:disable-next-line:typedef
   updatePicture(values: any, idCurrentAccount: number) {
     console.log(values);
-    return this.http.post(this.baseUrl + 'picture/upload/' + idCurrentAccount, values);
+    return this.http.post(this.baseUrl + 'api/picture/upload/' + idCurrentAccount, values);
+  }
+
+  // tslint:disable-next-line:typedef
+  downloadPicture(idAccount: number) {
+    return this.http.get(this.baseUrl + 'api/picture/download/' + idAccount);
   }
 }

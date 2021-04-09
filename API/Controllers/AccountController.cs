@@ -39,8 +39,8 @@ namespace API.Controllers
         public async Task<ActionResult<Account>> Login([Bind("Email,Password")] Account account)
         {
             var user = await _context.Accounts
-                .Where(e => (e.Email == account.Email))
-                .Where(p => (p.Password == account.Password))
+                .Where(e => e.Email == account.Email)
+                .Where(p => p.Password == account.Password)
                 .FirstOrDefaultAsync();
             if (user != null)
             {

@@ -3,6 +3,7 @@ using API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,12 +23,24 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpPost("upload")]
+        [HttpPost("upload/{idCurrentAccount}")]
         public async Task<string> HandleImg([FromForm] FileUpload objFile, int idCurrentAccount)
         {
             try
             {
-                if (objFile.Files.Length > 0)
+                
+                var file = new FileUpload();
+
+                if (objFile.Files == null)
+                {
+                    file.Files = Request.Form.Files[0];
+                }
+                else
+                {
+                    file = objFile;
+                }
+
+                if (file.Files != null)
                 {
                     var currentAccount = await _context.Accounts.FindAsync(idCurrentAccount);
                     var lastUrlPicture = currentAccount.UrlPicture;
@@ -43,7 +56,7 @@ namespace API.Controllers
                         System.IO.File.Delete(path + lastUrlPicture);
                     }
 
-                    var fileName = objFile.Files.FileName.ToString();
+                    var fileName = file.Files.FileName.ToString();
                     var explode = fileName.Split('.');
                     var extension = explode.Last();
                     var fileNameWithoutExtension = String.Join('.',explode.Take(explode.Count() - 1).ToArray());
@@ -57,14 +70,14 @@ namespace API.Controllers
                     }
 
                     using FileStream fileStream = System.IO.File.Create(path + newName);
-                    await objFile.Files.CopyToAsync(fileStream);
+                    await file.Files.CopyToAsync(fileStream);
                     fileStream.Flush();
 
                     currentAccount.UrlPicture = newName;
                     _context.Update(currentAccount);
                     await _context.SaveChangesAsync();
 
-                    return path + newName;
+                    return newName;
                 }
                 else
                 {
@@ -75,6 +88,13 @@ namespace API.Controllers
             {
                 return e.Message.ToString();
             }
+        }
+
+        [HttpGet("download/{idCurrentAccount}")]
+        public async Task<string> GetImg(int idAccount) 
+        {
+            var account = await _context.Accounts.FindAsync(idAccount);
+            return account.UrlPicture;
         }
     }
 }

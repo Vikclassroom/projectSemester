@@ -3,7 +3,7 @@
     <img class="mx-4" alt="Image de profile" src="{{root}}{{UrlPicture}}" style="max-width: 100%; max-height: 350px">
       <label class="col-12" for="image">Changer d'image de profile</label>
     <div [formGroup]="form">
-      <input class="col-12" (change)="changePicture($event)" type="file" id="image" formControlName="file" name="image">
+      <input class="col-12" (change)="changePicture($event.target.files)" type="file" id="image" formControlName="file" name="image">
     </div>
     <h4 class="col-12 align-content-center mx-4">{{email}}</h4>
   </div>

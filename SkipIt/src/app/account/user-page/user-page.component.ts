@@ -14,7 +14,8 @@ export class UserPageComponent implements OnInit {
   public path = 'assets/img/';
   public root = this.baseUrl + this.path + localStorage.getItem('urlPicture');
   public email: string;
-  public currentId = localStorage.getItem('id');
+  // tslint:disable-next-line:radix
+  public currentId = parseInt(localStorage.getItem('id'));
   constructor(private service: AuthService) { }
   form = new FormGroup({
     idCurrentUser: new FormControl('', [Validators.required]),
@@ -27,18 +28,19 @@ export class UserPageComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  changePicture(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.form.patchValue({
-        fileSource: file
-      });
+  changePicture(files: FileList) {
+    if (files.length > 0) {
+      const file = files.item(0);
 
       const formData = new FormData();
-      formData.append('file', this.form.get('fileSource').value);
+      formData.append('file', file, file.name);
 
       // tslint:disable-next-line:radix
-      this.service.updatePicture(formData , parseInt(this.currentId)).subscribe();
+      this.service.updatePicture(formData , this.currentId).subscribe(() => {
+        this.service.downloadPicture(this.currentId).subscribe((data: any) => {
+          localStorage.setItem('urlPicture', data);
+        });
+      });
     }
   }
 }
