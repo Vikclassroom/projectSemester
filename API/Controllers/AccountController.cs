@@ -83,14 +83,17 @@ namespace API.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(account);
+                var accountDefine = await _context.Accounts.FindAsync(id);
+                accountDefine.Email = account.Email;
+                accountDefine.Password = account.Password;
+                _context.Update(accountDefine);
                 await _context.SaveChangesAsync();
 
                 return new Account
                 {
-                    Email = account.Email,
-                    Password = account.Password,
-                    UrlPicture = account.UrlPicture
+                    Email = accountDefine.Email,
+                    Password = accountDefine.Password,
+                    UrlPicture = accountDefine.UrlPicture
                 };
             }
             return BadRequest();

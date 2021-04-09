@@ -65,7 +65,7 @@ export class AuthService {
   // tslint:disable-next-line:typedef
   emailExist(email: string) {
     console.log('prout');
-    return this.http.get(this.baseUrl + 'account/emailexist' + email);
+    return this.http.get(this.baseUrl + 'account/emailexist' + email, {responseType: });
   }
 
   // tslint:disable-next-line:typedef
@@ -73,7 +73,7 @@ export class AuthService {
     // tslint:disable-next-line:radix
     console.log('update');
     // tslint:disable-next-line:radix
-    return this.http.put<IAccount>(this.baseUrl + 'account/' + parseInt(localStorage.getItem('id')), values);
+    return this.http.put<IAccount>(this.baseUrl + 'api/account/' + parseInt(localStorage.getItem('id')), values);
   }
 
   // tslint:disable-next-line:typedef

@@ -35,10 +35,12 @@ export class SignComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   createAccount(){
-    this.service.register(this.registerForm.value).subscribe(() => {
-      this.router.navigateByUrl('/');
-    }, error => {
-      console.log(error);
+    this.service.emailExist(this.registerForm.value.email).subscribe(() => {
+      this.service.register(this.registerForm.value).subscribe(() => {
+        this.router.navigateByUrl('/');
+      }, error => {
+        console.log(error);
+      });
     });
   }
 
