@@ -1,1 +1,13 @@
-<h1>TOP</h1>
+<table class="table-striped">
+  <th scope="col-auto">Titre</th>
+  <th scope="col-auto">Artiste</th>
+  <th scope="col-auto">Delete</th>
+    <tr *ngFor="let chanson of music">
+      <td>{{chanson.title}}</td>
+      <td>{{chanson.artist}}</td>
+      <td>
+        <i (click)="deleteMusic(chanson.musicId)" class="fa fa-trash" aria-hidden="true"></i>
+      </td>
+    </tr>
+</table>
+

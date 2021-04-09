@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {ArtistsService} from './artists.service';
 import {ChartParams} from './chartParams';
+import {ServicesService} from '../../service/services.service';
 
 @Component({
   selector: 'app-artists',
@@ -12,7 +13,7 @@ export class ArtistsComponent implements OnInit {
   artist$: Observable<ChartParams>;
   tracks: [];
 
-  constructor(private artistService: ArtistsService) { }
+  constructor(private artistService: ArtistsService, private services: ServicesService) { }
 
   ngOnInit(): void {
     this.artistService.getChartList().subscribe((chart: ChartParams) => {
@@ -22,7 +23,5 @@ export class ArtistsComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  addToList() {
-    console.log('ok');
-  }
+
 }

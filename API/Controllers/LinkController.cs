@@ -25,10 +25,11 @@ namespace API.Controllers
         }
 
         //Get links/
-        [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<LinkDto>>> GetLinks()
+        [HttpGet("{idAccount}")]
+        public async Task<ActionResult<IReadOnlyList<LinkDto>>> GetLinks(int idAccount)
         {
-            var links = await _context.Links.ToListAsync();
+
+            var links = await _context.Links.Where(l => l.AccountId == idAccount).ToListAsync();
 
             return Ok(_mapper.Map<IReadOnlyList<LinkDto>>(links));
         }

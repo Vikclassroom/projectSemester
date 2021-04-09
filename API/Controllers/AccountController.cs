@@ -130,7 +130,7 @@ namespace API.Controllers
             return _context.Accounts.Any(e => e.AccountId == id);
         }
 
-        [HttpGet("emailExist")]
+        [HttpPost("emailexist")]
         public async Task<ActionResult<bool>> EmailExist(string email) 
         {
             var doesExist = await _context.Accounts.Where(e => e.Email == email).FirstOrDefaultAsync();

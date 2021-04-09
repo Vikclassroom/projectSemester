@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'accountChild', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)},
   {path: 'music', component: MusicComponent},
-  {path: 'myList', canActivate: [AuthGuard], component: MyListComponent},
+  {path: 'myList', /*canActivate: [AuthGuard],*/ component: MyListComponent},
   {path: 'account', component: AccountRoutingModule},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

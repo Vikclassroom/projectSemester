@@ -21,16 +21,15 @@ namespace API.Controllers
         }
 
         //Get music/
-        [HttpGet]
-        public async Task<ActionResult<List<Music>>> GetMusics()
+        [HttpGet("idAccount")]
+        public async Task<ActionResult<List<Music>>> GetMusics(int idAccount)
         {
-            var accounts = await _context.Musics.ToListAsync();
-
-            return Ok(accounts);
+            var musics = await _context.Links.Where(l => l.AccountId == idAccount).Select(l => l.Music).ToListAsync();
+            return musics;
         }
 
         //Post
-        [HttpPost]
+        [HttpPost("{accountId}")]
         public async Task<ActionResult<Music>> CreateMusic([Bind("Title,Artist")] Music music, int accountId)
         {
             if (ModelState.IsValid)
@@ -70,7 +69,7 @@ namespace API.Controllers
         }
 
         //Delete
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/{idAccount}")]
         public async Task<ActionResult<Music>> DeleteMusic(int id, int idAccount)
         {
             try

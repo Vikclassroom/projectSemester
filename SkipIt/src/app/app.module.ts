@@ -11,6 +11,7 @@ import { ArtistsComponent } from './core/music/artists/artists.component';
 import { MyListComponent } from './core/my-list/my-list.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SharedComponent } from './shared/shared.component';
+import { TrackComponent } from './core/music/track/track.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SharedComponent } from './shared/shared.component';
     MusicComponent,
     ArtistsComponent,
     MyListComponent,
-    SharedComponent
+    SharedComponent,
+    TrackComponent
   ],
   imports: [
     BrowserModule,
