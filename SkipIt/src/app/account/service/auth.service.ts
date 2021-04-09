@@ -44,6 +44,7 @@ export class AuthService {
       map((user: IAccount) => {
         if (user) {
           console.log(user);
+          this.isAuthenticated = true;
           localStorage.setItem('email', user.email);
           localStorage.setItem('urlPicture', user.urlPicture);
           localStorage.setItem('id', String(user.accountId));
