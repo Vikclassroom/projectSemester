@@ -90,7 +90,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("download/{idCurrentAccount}")]
+        [HttpGet("download/{idAccount}")]
         public async Task<string> GetImg(int idAccount) 
         {
             var account = await _context.Accounts.FindAsync(idAccount);

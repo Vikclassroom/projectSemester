@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {AuthService} from '../service/auth.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -19,7 +19,6 @@ export class UserPageComponent implements OnInit {
   // tslint:disable-next-line:radix
   public currentId = parseInt(localStorage.getItem('id'));
   updateForm: FormGroup;
-
 
   constructor(private service: AuthService, private router: Router, private fb: FormBuilder) {
     this.updateForm = fb.group({
