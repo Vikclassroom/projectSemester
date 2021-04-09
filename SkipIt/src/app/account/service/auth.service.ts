@@ -10,11 +10,8 @@ import {ReplaySubject} from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  public isAuth = false;
-  public loginModel: IAccount;
   public baseUrl = environment.apiUrl;
   private currentUser: ReplaySubject<IAccount> = new ReplaySubject<IAccount>(null);
-  currentUser$ = this.currentUser.asObservable();
   public id: number;
 
   constructor(private router: Router, private http: HttpClient) {
@@ -65,7 +62,7 @@ export class AuthService {
   // tslint:disable-next-line:typedef
   emailExist(email: string) {
     console.log('prout');
-    return this.http.get(this.baseUrl + 'account/emailexist' + email, {responseType: });
+    return this.http.get<boolean>(this.baseUrl + 'api/account/emailexist' + email);
   }
 
   // tslint:disable-next-line:typedef
@@ -81,8 +78,7 @@ export class AuthService {
     // tslint:disable-next-line:radix
     console.log('delete');
     // tslint:disable-next-line:radix
-    this.http.delete(this.baseUrl + 'account/' + parseInt(localStorage.getItem('id')));
-    return this.logout();
+    return this.http.delete(this.baseUrl + 'api/account/' + parseInt(localStorage.getItem('id')));
   }
 
   // tslint:disable-next-line:typedef

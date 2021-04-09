@@ -67,4 +67,10 @@ export class UserPageComponent implements OnInit {
       console.log(error);
     });
   }
+
+  // tslint:disable-next-line:typedef
+  nukeMe() {
+    this.service.deleteAccount().subscribe();
+    this.service.logout();
+  }
 }

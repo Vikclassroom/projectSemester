@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService} from '../service/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../service/auth.service';
 import {FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {confirmPassword} from './confirmPassword';
@@ -34,13 +34,17 @@ export class SignComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  createAccount(){
-    this.service.emailExist(this.registerForm.value.email).subscribe(() => {
-      this.service.register(this.registerForm.value).subscribe(() => {
-        this.router.navigateByUrl('/');
-      }, error => {
-        console.log(error);
-      });
+  createAccount() {
+    this.service.emailExist(this.registerForm.value.email).subscribe((data) => {
+      if (!data) {
+        this.service.register(this.registerForm.value).subscribe(() => {
+          this.router.navigateByUrl('/');
+        }, error => {
+          console.log(error);
+        });
+      } else {
+        console.log('Cet email existe');
+      }
     });
   }
 

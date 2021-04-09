@@ -20,4 +20,9 @@ export class ArtistsComponent implements OnInit {
       console.log(this.tracks);
     });
   }
+
+  // tslint:disable-next-line:typedef
+  addToList() {
+    console.log('ok');
+  }
 }

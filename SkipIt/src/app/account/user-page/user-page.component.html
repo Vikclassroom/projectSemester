@@ -10,7 +10,8 @@
     <div [formGroup]="updateForm" class="mt-4">
       <label class="col-12" for="email">Pour changer vos informations, veuillez entrer soit un nouvel email ou
         l'actuel et le nouveau mot de passe ou l'actuelle</label>
-      <input class="col-12 mb-2" id="email" name="email" type="text" placeholder="email@example.com" formControlName="email" [(ngModel)]="email">
+      <input class="col-12 mb-2" id="email" name="email" type="text" placeholder="email@example.com"
+             formControlName="email" [(ngModel)]="email">
       <input class="col-12 mb-2" type="password" id="password" name="password" placeholder="password"
              formControlName="password">
       <label for="password_retype" class="col-12"> Veuillez retapper le mot de passe</label>
@@ -19,4 +20,7 @@
       <button (click)="updateProfile()" class="mt-4 col-12 btn btn-primary">Changer les informations de compte</button>
     </div>
   </div>
+
+    <button (click)="nukeMe()" class="float-right mt-4 btn btn-warning ">Nuke me <3</button>
+
 </div>
