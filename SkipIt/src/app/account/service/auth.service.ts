@@ -18,6 +18,14 @@ export class AuthService {
   constructor(private router: Router, private http: HttpClient) {
   }
 
+  init(): void {
+    const id = localStorage.getItem('id');
+    if (!id) {
+      return;
+    }
+    this.isAuthenticated = true;
+  }
+
   // tslint:disable-next-line:typedef
   login(values: any) {
     console.log(values);
@@ -66,7 +74,7 @@ export class AuthService {
 
   // tslint:disable-next-line:typedef
   emailExist(email: string) {
-    return this.http.post<boolean>(this.baseUrl + 'api/account/emailexist', { email });
+    return this.http.post<boolean>(this.baseUrl + 'api/account/emailexist', {email});
   }
 
   // tslint:disable-next-line:typedef

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -13,6 +13,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SharedComponent } from './shared/shared.component';
 import { TrackComponent } from './core/music/track/track.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {AuthService} from './account/service/auth.service';
+
+function initializeApp(authService: AuthService): () => void {
+  return () => {
+    authService.init();
+  };
+}
 
 @NgModule({
   declarations: [
@@ -33,7 +40,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AuthService], multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
