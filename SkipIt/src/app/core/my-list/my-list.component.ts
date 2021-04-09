@@ -16,6 +16,10 @@ export class MyListComponent implements OnInit {
   constructor(private services: ServicesService) { }
 
   ngOnInit(): void {
+    this.intiMusics();
+  }
+
+  intiMusics(): void {
     this.services.getMusic().subscribe((data: IMusic) => {
       this.music = data;
     });
@@ -23,7 +27,9 @@ export class MyListComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   deleteMusic(idMusic: number) {
-    this.services.deleteMusic(idMusic).subscribe();
-    window.location.reload();
+    if (!confirm('Voulez-vous supprimer la musique ?')) { return; }
+    this.services.deleteMusic(idMusic).subscribe(() => {
+      this.intiMusics();
+    });
   }
 }
