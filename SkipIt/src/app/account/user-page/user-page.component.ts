@@ -14,7 +14,7 @@ export class UserPageComponent implements OnInit {
   UrlPicture: string;
   public baseUrl = environment.apiUrl;
   public path = 'assets/img/';
-  public root = this.baseUrl + this.path + localStorage.getItem('urlPicture');
+  public root = this.baseUrl + this.path;
   public email: string;
   // tslint:disable-next-line:radix
   public currentId = parseInt(localStorage.getItem('id'));
@@ -38,6 +38,7 @@ export class UserPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = localStorage.getItem('email');
+    this.UrlPicture = localStorage.getItem('urlPicture');
   }
 
 
@@ -53,7 +54,7 @@ export class UserPageComponent implements OnInit {
       this.service.updatePicture(formData, this.currentId).subscribe(() => {
         this.service.downloadPicture(this.currentId).subscribe((data) => {
           localStorage.setItem('urlPicture', data);
-          window.location.reload();
+          this.UrlPicture = data;
         });
       });
     }

@@ -33,6 +33,6 @@ export class ServicesService {
   // tslint:disable-next-line:typedef
   deleteMusic(idMusic: number) {
     // tslint:disable-next-line:radix
-    return this.http.delete(this.baseUrl + 'api/music/' + idMusic + '/' + parseInt(localStorage.getItem('id')));
+    return this.http.delete(this.baseUrl + 'api/music/' + idMusic + '/' + parseInt(localStorage.getItem('id')), {responseType: 'text'});
   }
 }
