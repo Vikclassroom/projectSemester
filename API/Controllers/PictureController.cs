@@ -22,9 +22,6 @@ namespace API.Controllers
             _context = context;
         }
 
-       /* [HttpGet("download")]
-        public async Task<string> GetImg()$*/
-
         [HttpPost("upload")]
         public async Task<string> HandleImg([FromForm] FileUpload objFile, int idCurrentAccount)
         {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {environment} from '../../../environments/environment';
 import { AuthService } from '../service/auth.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-user-page',
@@ -13,7 +14,13 @@ export class UserPageComponent implements OnInit {
   public path = 'assets/img/';
   public root = this.baseUrl + this.path + localStorage.getItem('urlPicture');
   public email: string;
+  public currentId = localStorage.getItem('id');
   constructor(private service: AuthService) { }
+  form = new FormGroup({
+    idCurrentUser: new FormControl('', [Validators.required]),
+    file: new FormControl('', [Validators.required]),
+    fileSource: new FormControl('', [Validators.required])
+  });
 
   ngOnInit(): void {
       this.email = localStorage.getItem('email');
@@ -21,16 +28,17 @@ export class UserPageComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   changePicture(event) {
-    const files = event.srcElement.files;
-    if (!files) {
-      return ;
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.form.patchValue({
+        fileSource: file
+      });
+
+      const formData = new FormData();
+      formData.append('file', this.form.get('fileSource').value);
+
+      // tslint:disable-next-line:radix
+      this.service.updatePicture(formData , parseInt(this.currentId)).subscribe();
     }
-    // tslint:disable-next-line:radix
-    const id = localStorage.getItem('id');
-    const formData: FormData = new FormData();
-    formData.append('idCurrentAccount', id);
-    this.service.updatePicture(formData).subscribe(() => {}, error => {
-      console.log(error);
-    });
   }
 }

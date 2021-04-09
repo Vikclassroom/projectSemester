@@ -2,8 +2,9 @@
   <div class="row d-flex justify-content-center">
     <img class="mx-4" alt="Image de profile" src="{{root}}{{UrlPicture}}" style="max-width: 100%; max-height: 350px">
       <label class="col-12" for="image">Changer d'image de profile</label>
-      <input class="col-12" (change)="changePicture($event)" type="file" id="image" name="image">
-
+    <div [formGroup]="form">
+      <input class="col-12" (change)="changePicture($event)" type="file" id="image" formControlName="file" name="image">
+    </div>
     <h4 class="col-12 align-content-center mx-4">{{email}}</h4>
   </div>
 </div>
