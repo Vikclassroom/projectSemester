@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ServicesService} from '../service/services.service';
 import {IMusic} from '../../shared/models/music';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-my-list',
@@ -10,6 +11,7 @@ import {IMusic} from '../../shared/models/music';
 export class MyListComponent implements OnInit {
   music: {};
   id = localStorage.getItem('id');
+  faTrash = faTrash;
 
   constructor(private services: ServicesService) { }
 

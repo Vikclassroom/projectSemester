@@ -19,13 +19,6 @@ export class ServicesService {
   }
 
   // tslint:disable-next-line:typedef
-  getLink() {
-    // tslint:disable-next-line:radix
-    const idAccount = parseInt(localStorage.getItem('id'));
-    return this.http.get(this.baseUrl + 'api/link/' + idAccount);
-  }
-
-  // tslint:disable-next-line:typedef
   getMusic() {
     const idAccount = localStorage.getItem('id');
     return this.http.get(this.baseUrl + 'api/music/' + idAccount);
@@ -40,6 +33,6 @@ export class ServicesService {
   // tslint:disable-next-line:typedef
   deleteMusic(idMusic: number) {
     // tslint:disable-next-line:radix
-    return this.http.delete(this.baseUrl + 'api/music' + idMusic + '/' + parseInt(localStorage.getItem('id')));
+    return this.http.delete(this.baseUrl + 'api/music/' + idMusic + '/' + parseInt(localStorage.getItem('id')));
   }
 }

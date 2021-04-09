@@ -9,9 +9,9 @@ import {AccountRoutingModule} from './account/account-routing.module';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'accountChild', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule)},
-  {path: 'music', component: MusicComponent},
-  {path: 'myList', /*canActivate: [AuthGuard],*/ component: MyListComponent},
-  {path: 'account', component: AccountRoutingModule},
+  {path: 'music', canActivate: [AuthGuard], component: MusicComponent},
+  {path: 'myList', canActivate: [AuthGuard], component: MyListComponent},
+  {path: 'account', canActivate: [AuthGuard], component: AccountRoutingModule},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

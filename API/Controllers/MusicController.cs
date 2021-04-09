@@ -21,7 +21,7 @@ namespace API.Controllers
         }
 
         //Get music/
-        [HttpGet("idAccount")]
+        [HttpGet("{idAccount}")]
         public async Task<ActionResult<List<Music>>> GetMusics(int idAccount)
         {
             var musics = await _context.Links.Where(l => l.AccountId == idAccount).Select(l => l.Music).ToListAsync();
@@ -70,7 +70,7 @@ namespace API.Controllers
 
         //Delete
         [HttpDelete("{id}/{idAccount}")]
-        public async Task<ActionResult<Music>> DeleteMusic(int id, int idAccount)
+        public async Task<ActionResult<string>> DeleteMusic(int id, int idAccount)
         {
             try
             {

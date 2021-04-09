@@ -12,6 +12,7 @@ import { MyListComponent } from './core/my-list/my-list.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SharedComponent } from './shared/shared.component';
 import { TrackComponent } from './core/music/track/track.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TrackComponent } from './core/music/track/track.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

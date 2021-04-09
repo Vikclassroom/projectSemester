@@ -1,13 +1,16 @@
-<table class="table-striped">
-  <th scope="col-auto">Titre</th>
-  <th scope="col-auto">Artiste</th>
-  <th scope="col-auto">Delete</th>
-    <tr *ngFor="let chanson of music">
-      <td>{{chanson.title}}</td>
-      <td>{{chanson.artist}}</td>
-      <td>
-        <i (click)="deleteMusic(chanson.musicId)" class="fa fa-trash" aria-hidden="true"></i>
-      </td>
-    </tr>
-</table>
-
+<div class="container mt-5">
+  <div class="row d-flex justify-content-center">
+    <table class="table-striped">
+      <th scope="col"><strong>Titre</strong></th>
+      <th scope="col"><strong>Artiste</strong></th>
+      <th scope="col"><strong>Action</strong></th>
+      <tr *ngFor="let chanson of music">
+        <td>{{chanson.title}}</td>
+        <td>{{chanson.artist}}</td>
+        <td>
+          <fa-icon (click)="deleteMusic(chanson.musicId)" [icon]="faTrash"></fa-icon>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
