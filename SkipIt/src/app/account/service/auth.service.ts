@@ -69,11 +69,11 @@ export class AuthService {
   }
 
   // tslint:disable-next-line:typedef
-  updateUser(email: string, password: string) {
+  updateUser(values: any) {
     // tslint:disable-next-line:radix
     console.log('update');
     // tslint:disable-next-line:radix
-    return this.http.put<IAccount>(this.baseUrl + 'account/' + parseInt(localStorage.getItem('id')), { email, password });
+    return this.http.put<IAccount>(this.baseUrl + 'account/' + parseInt(localStorage.getItem('id')), values);
   }
 
   // tslint:disable-next-line:typedef
@@ -88,11 +88,11 @@ export class AuthService {
   // tslint:disable-next-line:typedef
   updatePicture(values: any, idCurrentAccount: number) {
     console.log(values);
-    return this.http.post(this.baseUrl + 'api/picture/upload/' + idCurrentAccount, values);
+    return this.http.post(this.baseUrl + 'api/picture/upload/' + idCurrentAccount, values, {responseType: 'text'});
   }
 
   // tslint:disable-next-line:typedef
   downloadPicture(idAccount: number) {
-    return this.http.get(this.baseUrl + 'api/picture/download/' + idAccount);
+    return this.http.get(this.baseUrl + 'api/picture/download/' + idAccount, {responseType: 'text'});
   }
 }

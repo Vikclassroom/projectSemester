@@ -48,6 +48,6 @@ export class SignComponent implements OnInit {
       this.router.navigateByUrl('user');
     }, error => {
       console.log(error);
-    });;
+    });
   }
 }

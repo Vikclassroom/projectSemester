@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import { AuthService } from '../service/auth.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../service/auth.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {confirmPassword} from './confirmPassword';
 
 @Component({
   selector: 'app-user-page',
@@ -16,7 +18,19 @@ export class UserPageComponent implements OnInit {
   public email: string;
   // tslint:disable-next-line:radix
   public currentId = parseInt(localStorage.getItem('id'));
-  constructor(private service: AuthService) { }
+  updateForm: FormGroup;
+
+
+  constructor(private service: AuthService, private router: Router, private fb: FormBuilder) {
+    this.updateForm = fb.group({
+      email: ['', [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]],
+      password: ['', Validators.required],
+      password_retype: ['', Validators.required]
+    }, {
+      validator: confirmPassword('password', 'password_retype')
+    });
+  }
+
   form = new FormGroup({
     idCurrentUser: new FormControl('', [Validators.required]),
     file: new FormControl('', [Validators.required]),
@@ -24,8 +38,9 @@ export class UserPageComponent implements OnInit {
   });
 
   ngOnInit(): void {
-      this.email = localStorage.getItem('email');
+    this.email = localStorage.getItem('email');
   }
+
 
   // tslint:disable-next-line:typedef
   changePicture(files: FileList) {
@@ -36,11 +51,21 @@ export class UserPageComponent implements OnInit {
       formData.append('file', file, file.name);
 
       // tslint:disable-next-line:radix
-      this.service.updatePicture(formData , this.currentId).subscribe(() => {
-        this.service.downloadPicture(this.currentId).subscribe((data: any) => {
+      this.service.updatePicture(formData, this.currentId).subscribe(() => {
+        this.service.downloadPicture(this.currentId).subscribe((data) => {
           localStorage.setItem('urlPicture', data);
+          window.location.reload();
         });
       });
     }
+  }
+
+  // tslint:disable-next-line:typedef
+  updateProfile() {
+    this.service.updateUser(this.updateForm.value).subscribe(() => {
+      this.router.navigateByUrl('user');
+    }, error => {
+      console.log(error);
+    });
   }
 }

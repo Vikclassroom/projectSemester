@@ -1,10 +1,25 @@
 <div class="container mt-4">
   <div class="row d-flex justify-content-center">
+    <h4 class="col-12 mx-4 my-5 text-center">{{email}}</h4>
     <img class="mx-4" alt="Image de profile" src="{{root}}{{UrlPicture}}" style="max-width: 100%; max-height: 350px">
-      <label class="col-12" for="image">Changer d'image de profile</label>
     <div [formGroup]="form">
-      <input class="col-12" (change)="changePicture($event.target.files)" type="file" id="image" formControlName="file" name="image">
+      <label class="col-12" for="image">Changer d'image de profile</label>
+      <input class="col-12" (change)="changePicture($event.target.files)" type="file" id="image" formControlName="file"
+             name="image">
     </div>
-    <h4 class="col-12 align-content-center mx-4">{{email}}</h4>
+    <div [formGroup]="updateForm" class="mt-4">
+      <label class="col-12" for="email">Pour changer votre email, veuillez entrer soit un nouvel email ou
+        l'actuel</label>
+      <input class="col-12 mb-2" id="email" name="email" type="text" placeholder="email" formControlName="email">
+      <label for="password" class="col-12">Pour changer votre mot de passe, veuillez entrer soit un nouveau mdp ou
+        l'actuel</label>
+      <input class="col-12 mb-2" type="password" id="password" name="password" placeholder="password"
+             formControlName="password">
+      <label for="password_retype" class="col-12"> Vérifiez bien avant de cliquer que vous ayez entré votre email ET votre mot de passe
+        <br>Et que vous ayez confirmé ce dernier avec cette vérification de password</label>
+      <input class="col-12" type="password" id="password_retype" name="password_retype"
+             placeholder="retapper votre password" formControlName="password_retype">
+      <button (click)="updateProfile()" class="mt-4 col-12 btn btn-primary">Changer les informations de compte</button>
+    </div>
   </div>
 </div>
